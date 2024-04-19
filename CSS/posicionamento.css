@@ -1,0 +1,50 @@
+.container {
+    width: 300px;/*Largura*/
+    height: 500px;/*Altura*/
+    border: 1px solid #000;/*Desenha a linha da borda*/
+    margin-top: 200px; /*Margem superior*/
+}
+
+
+.absolutely-positioned {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: 1px solid #f00;
+}
+
+.relatively-positioned{
+    position: relative;
+    top: 50px;
+    left: 50px;
+    border: #f00 solid 1px;
+}
+
+.fixed-positioned {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #f00;
+    color: #fff;
+    padding: 10px;
+}
+
+.container-sticky {
+    height: 2000px;
+    border: 1px solid #000;
+}
+
+.sticky-element {
+    position: -webkit-sticky;
+    /* Para compatibilidade com navegadores WebKit */
+    position: sticky;
+    top: 100px; /* Ponto de ativação */
+    background-color: #f00;
+    color: #fff;
+    padding: 10px;
+    z-index: 1000;
+    /* Z-index para garantir que fique acima do conteúdo */
+}
+
+
+
