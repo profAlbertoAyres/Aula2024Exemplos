@@ -3,6 +3,7 @@
     height: 500px;/*Altura*/
     border: 1px solid #000;/*Desenha a linha da borda*/
     margin-top: 200px; /*Margem superior*/
+    position: relative;
 }
 
 
