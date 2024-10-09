@@ -25,43 +25,98 @@ body {
 }
 
 header {
+    position: relative;
     flex: 0 0 auto;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--cor-principal);
     padding: 0.7rem 6rem;
     display: flex;
+    background-image: url('../imagens/logo.png');
+    background-repeat: no-repeat;
+    /* Menu Lateral */
+    /* background-color: var(--cor-principal); */
 }
+
+header::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(223, 217, 217, 0.5);
+    background-blend-mode: overlay;
+    z-index: 1;
+}
+
 
 header img {
     width: 150px;
 }
 
+/* Menu Lateral muda cor da fonte de H1 */
+
+header h1{
+    color: #000;
+    position: relative;
+    text-align: center;
+    z-index: 2; /* Garante que o texto fique acima do background */
+    margin: 0;
+    line-height: 100vh; /* Centraliza verticalmente o texto */
+}
+
+header .empresa{
+    display: flex;
+    justify-content: space-around;
+}
+
+header .rede-social {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
 main {
     flex: 1;
     display: flex;
+    /* Menu Lateral */
+    flex-direction: column;
 }
 
 .menu {
-    width: 250px;
     background-color: var(--cor-principal);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     /* Organiza itens em uma coluna */
     margin: 0;
     padding: 0;
+    
+    /* Menu Lateral */
+    /* width: 250px; */
+    /* flex-direction: column; */
 }
 
 .menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    /* Menu Lateral */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100% ;
 }
 
 .menu li {
     margin-bottom: 10px;
     /* Espaçamento entre itens do menu */
-    border-bottom: #ddd solid 1px; /*Só se achar necessário*/
+    
+    /*Só se achar necessário*/
+
+    /* Menu Lateral */
+    text-align: center;
 }
 
 .menu a {
@@ -73,6 +128,12 @@ main {
     /* Padding para os itens do menu */
     display: block;
     /* Faz com que o link ocupe toda a largura do item */
+
+    /* Menu Lateral */
+    width: 200px;
+    border-bottom: #ddd solid 1px;
+    border-radius: 3px;
+    margin: 5px;
 }
 
 .menu a:hover {
@@ -93,26 +154,58 @@ footer {
     padding: 20px;
 }
 
-.menu-resp{
+.menu-resp {
     display: none;
 }
 
-.menu button{
+.menu button {
     display: none;
 }
+
+
 
 @media screen and (max-width: 650px) {
     header{
-        flex-direction: column;
-        justify-content: center;
+        background-color: var(--cor-principal);
     }
 
-    header img{
+    header h1{
+        color: #eee;
+    }
+    main{
+        flex-direction: row;
+    }
+    
+    .menu{
+         width: 250px;
+         height: auto; 
+    }
+    
+    .menu ul{
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    
+    .menu li{
+        text-align: left;
+    }
+    
+    .menu a{
+        width: 250px;
+    }
+    
+
+    /* Antigo */
+    header {
+        flex-direction: column;
+    }
+
+    header img {
         width: 150px;
         height: auto;
     }
 
-    .menu{
+    .menu {
         position: absolute;
         top: 0;
         left: 0;
@@ -120,7 +213,7 @@ footer {
         padding-top: 50px;
     }
 
-    .menu button{
+    .menu button {
         display: block;
         width: 30px;
         position: absolute;
@@ -132,22 +225,26 @@ footer {
         border: none;
         cursor: pointer;
     }
-    .menu-resp{
+
+    .menu-resp {
         display: block;
         position: absolute;
         padding: 20px;
     }
-    .menu-resp button{
+
+    .menu-resp button {
         background-color: transparent;
         color: #fff;
         font-size: 30px;
         border: none;
         cursor: pointer;
     }
-    .mostrar{
+
+    .mostrar {
         display: none;
     }
-    main{
+
+    main {
         padding: 10px;
     }
 }
