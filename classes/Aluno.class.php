@@ -1,7 +1,7 @@
 <?php
 
 class Aluno extends CRUD{
-    protected $table;
+    protected $table = "Aluno";
     private $id;
     private $nome;
     private $email;
@@ -9,6 +9,10 @@ class Aluno extends CRUD{
     private $estadoCivil;
     private $status;
     private $foto;
+
+    public function __construct() {
+        
+    }
 
 
     /**
@@ -132,10 +136,39 @@ class Aluno extends CRUD{
     }
 
     function add(){
+        // SQL de inserção
+        $sql = "INSERT INTO Aluno (nome, email, celular, estadoCivil, status, foto) 
+                VALUES (:nome, :email, :celular, :estadoCivil, :status, :foto)";
+
+        // Preparar a declaração usando a classe Database
+        $stmt = Database::prepare($sql);
+
+        // Atribuir os valores aos parâmetros
+        $stmt->bindParam(':nome', $this->nome);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':celular', $this->celular);
+        $stmt->bindParam(':estadoCivil', $this->estadoCivil);
+        $stmt->bindParam(':status', $this->status);
+        $stmt->bindParam(':foto', $this->foto);
+
+        // Executar a consulta e verificar se funcionou
+        return $stmt->execute();
 
     }
-    function update($field, $id){
-        
+    function update($campo, $id){
+        $sql = "UPDATE $this->table SET nome=:nome, email=:email, celular=:celular, estadocivil=:estadocivil, status=:status, foto=:foto WHERE $campo=:id";
+        $stmt = Database::prepare($sql);
+        // Atribuir os valores aos parâmetros
+        $stmt->bindParam(':nome', $this->nome);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':celular', $this->celular);
+        $stmt->bindParam(':estadocivil', $this->estadoCivil);
+        $stmt->bindParam(':status', $this->status);
+        $stmt->bindParam(':foto', $this->foto);
+        $stmt->bindParam(":id",$id,PDO::PARAM_INT);
+
+        // Executar a consulta e verificar se funcionou
+        return $stmt->execute();
     }
 
     /**

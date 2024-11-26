@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <meta charset="UTF-8">
@@ -26,109 +26,109 @@
               <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Alunos</a>
+              <a class="nav-link active" aria-current="page" href="alunosDiv.php">Alunos</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
   </header>
-  <main>
-    <?php
-    if (filter_has_var(INPUT_POST, "salvar")) {
-      spl_autoload_register(function ($class) {
-        require_once("classes/{$class}.class.php");
-      });
-      // Diretório onde o arquivo será salvo
-      $diretorio = 'imagensAlunos/';
+  <?php
+  if (filter_has_var(INPUT_POST, "salvar")) {
+    spl_autoload_register(function ($class) {
+      require_once("classes/{$class}.class.php");
+    });
+    // Diretório onde o arquivo será salvo
+    $diretorio = 'imagensAlunos/';
 
-      // Verifica se o diretório existe
-      if (!is_dir($diretorio)) {
-        die("O diretório '$diretorio' não existe.");
-      }
-
-      // Verifica se o arquivo foi enviado
-      if (isset($_FILES['foto'])) {
-        $arquivo = $_FILES['foto'];
-
-        // Verifica se houve erro no upload
-        if ($arquivo['error'] !== UPLOAD_ERR_OK) {
-          die("Erro ao fazer upload da imagem. Código do erro: " . $arquivo['error']);
-        }
-        //Pegar a extensão do arquivo
-        $extensao = strtolower(pathinfo(basename($arquivo['name']), PATHINFO_EXTENSION));
-        // Gera um nome único para a imagem
-        $nomeArquivo = uniqid() . '.' . $extensao;
-        $caminhoArquivo = $diretorio . $nomeArquivo;
-
-        // Move o arquivo para o diretório especificado
-        if (!move_uploaded_file($arquivo['tmp_name'], $caminhoArquivo)) {
-          die("Erro ao mover o arquivo.");
-        }
-      } else {
-        die("Nenhum arquivo foi enviado.");
-      }
-
-      $aluno = new Aluno;
-      $aluno->setNome(filter_input(INPUT_POST, 'nome'));
-      $aluno->setEmail(filter_input(INPUT_POST, 'email'));
-      $aluno->setCelular(filter_input(INPUT_POST, 'celular'));
-      $aluno->setEstadoCivil(filter_input(INPUT_POST, 'estadocivil'));
-      $aluno->setStatus(filter_input(INPUT_POST, 'status'));
-      $aluno->setFoto(filter_input(INPUT_POST, 'foto'));
-
+    // Verifica se o diretório existe
+    if (!is_dir($diretorio)) {
+      die("O diretório '$diretorio' não existe.");
     }
 
-    ?>
-    <div class="container">
-      <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post" class="row g3"
-        enctype="multipart/form-data">
-        <div class="col-12 mb-3">
-          <label for="nome" class="form-label">nome</label>
-          <input type="text" name="nome" id="nome" class="form-control" placeholder="">
-        </div>
-        <div class="col-12 mb-3">
-          <label for="email" class="form-label">E-mail</label>
-          <input type="email" name="email" id="email" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-4 mb-3">
-          <label for="celular" class="form-label">Celular</label>
-          <input type="text" name="celular" id="celular" class="form-control" placeholder="">
-        </div>
-        <div class="col-md-4 mb-3">
-          <label for="estadocivil" class="form-label">Estado Civil</label>
-          <select name="estadocivil" id="estadocivil" class="form-select">
-            <option>Selecione o Estado Civil</option>
-            <option value="Sol">Solteiro</option>
-            <option value="Cas">Casado</option>
-            <option value="Sep">Separado</option>
-            <option value="Div">Divorciado</option>
-            <option value="Viú">Viúvo</option>
-          </select>
-        </div>
-        <div class="col-md-4 mb-3">
-          <label for="" class="form-label">Status</label>
-          <div>
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" class="btn-check" name="status" id="ativo" autocomplete="off" value="A">
-              <label class="btn btn-outline-success" for="ativo">Ativo</label>
+    // Verifica se o arquivo foi enviado
+    if (isset($_FILES['foto'])) {
+      $arquivo = $_FILES['foto'];
 
-              <input type="radio" class="btn-check" name="status" id="inativo" autocomplete="off" value="I">
-              <label class="btn btn-outline-danger" for="inativo">Inativo</label>
-            </div>
+      // Verifica se houve erro no upload
+      if ($arquivo['error'] !== UPLOAD_ERR_OK) {
+        die("Erro ao fazer upload da imagem. Código do erro: " . $arquivo['error']);
+      }
+      //Pegar a extensão do arquivo
+      $extensao = strtolower(pathinfo(basename($arquivo['name']), PATHINFO_EXTENSION));
+      // Gera um nome único para a imagem
+      $nomeArquivo = uniqid() . '.' . $extensao;
+      $caminhoArquivo = $diretorio . $nomeArquivo;
+
+      // Move o arquivo para o diretório especificado
+      if (!move_uploaded_file($arquivo['tmp_name'], $caminhoArquivo)) {
+        die("Erro ao mover o arquivo.");
+      }
+    } else {
+      die("Nenhum arquivo foi enviado.");
+    }
+
+    $aluno = new Aluno;
+    $aluno->setNome(filter_input(INPUT_POST, 'nome'));
+    $aluno->setEmail(filter_input(INPUT_POST, 'email'));
+    $aluno->setCelular(filter_input(INPUT_POST, 'celular'));
+    $aluno->setEstadoCivil(filter_input(INPUT_POST, 'estadocivil'));
+    $aluno->setStatus(filter_input(INPUT_POST, 'status'));
+    $aluno->setFoto($nomeArquivo);
+
+    $aluno->add();
+
+  }
+  ?>
+  <div class="container">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post" class="row g3"
+      enctype="multipart/form-data">
+      <div class="col-12 mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" name="nome" id="nome" class="form-control" placeholder="">
+      </div>
+      <div class="col-12 mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="">
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="celular" class="form-label">Celular</label>
+        <input type="text" name="celular" id="celular" class="form-control" placeholder="">
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="estadocivil" class="form-label">Estado Civil</label>
+        <select name="estadocivil" id="estadocivil" class="form-select">
+          <option>Selecione o Estado Civil</option>
+          <option value="Sol">Solteiro</option>
+          <option value="Cas">Casado</option>
+          <option value="Sep">Separado</option>
+          <option value="Div">Divorciado</option>
+          <option value="Viú">Viúvo</option>
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="" class="form-label">Status</label>
+        <div>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="status" id="ativo" autocomplete="off" value="A">
+            <label class="btn btn-outline-success" for="ativo">Ativo</label>
+
+            <input type="radio" class="btn-check" name="status" id="inativo" autocomplete="off" value="I">
+            <label class="btn btn-outline-danger" for="inativo">Inativo</label>
           </div>
         </div>
-        <div class="col-12 mb-3">
-          <label for="foto" class="form-label">Foto</label>
-          <input type="file" name="foto" id="foto" class="form-control" placeholder="" accept="image/*">
-        </div>
-        <div class="col-12 mb-3">
-          <button type="submit" class="btn btn-primary" name="salvar">
-            Salvar
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+      <div class="col-12 mb-3">
+        <label for="foto" class="form-label">Foto</label>
+        <input type="file" name="foto" id="foto" class="form-control" placeholder="" accept="image/*">
+      </div>
+      <div class="col-12 mb-3">
+        <button type="submit" class="btn btn-primary" name="salvar">
+          Salvar
+        </button>
+      </div>
+    </form>
+  </div>
   </main>
   <footer>
 
