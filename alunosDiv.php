@@ -1,14 +1,10 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once 'validaUser.php';
 
-if (!isset($_SESSION['user_name'])) {
-    // Salva a URL atual
-    $current_page = urlencode($_SERVER['REQUEST_URI']);
-    header("Location: login.php?redirect=$current_page");
-    exit();
-}
+$niveisPermitidos = [3, 2]; // Exemplo: Administrador e Gerente
+
+
+
 ?>
 
 <!DOCTYPE html>

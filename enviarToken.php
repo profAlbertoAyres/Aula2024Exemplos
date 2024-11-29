@@ -24,36 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $auth->setEmail($email);
         // Monta o link de redefinição de senha
         $resetLink = "http://example.com/reset_password.php?token=" . $auth->gerarToken();
-
-
-        try {
-
-            $mail->isSMTP();
-
-            $mail->SMTPDebug = false;
-            $mail->SMTPSecure = 'ssl';
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Port = 465;
-
-            $mail->Username = 'bettojogar@gmail.com'; // Seu endereço Gmail
-            $mail->Password = 'Jogar@2019'; // Senha do Gmail ou senha de aplicativo
-            // Remetente e destinatário
-            $mail->setFrom('bettojogar@gmail.com', 'Alberto'); // Remetente
-            $mail->addAddress($email,'Redefinição de Senha'); // Destinatário
-
-            $mail->Subject = 'Redefinição de senha';
-            $mail->msgHTML("Olá,\n\nRecebemos um pedido para redefinir sua senha. Clique no link abaixo para criar uma nova senha:\n\n$resetLink\n\nSe você não solicitou essa alteração, ignore este e-mail.");
-
-            // Enviar o e-mail
-            $mail->send();
-            echo 'E-mail enviado com sucesso!';
-        } catch (Exception $e) {
-            echo "Erro ao enviar o e-mail: {$mail->ErrorInfo}";
+        $to = "bettoayres@gmail.com";
+        $subject = "Teste de envio de email";
+        $message = "Este é um email enviado via função mail() do PHP.";
+        $headers = "From: remetente@exemplo.com";
+        
+        if (mail($to, $subject, $message, $headers)) {
+            echo "E-mail enviado com sucessoss!";
+        } else {
+            echo "Falha ao enviar o e-mail.";
         }
-    } else {
-        echo "<script>alert('E-mail não encontrado no sistema.');</script>";
     }
+        
 }
 ?>
 

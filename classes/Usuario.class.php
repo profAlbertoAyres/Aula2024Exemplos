@@ -100,6 +100,21 @@ class Usuario extends CRUD
         return false;
     }
 
+    public function verificarNivelAcesso($nivelNecessario)
+    {
+        // Verifica se o usuário está logado
+        if (!isset($_SESSION['user_id'])) {
+            return false; // Usuário não está logado
+        }
+
+        // Verifica se o nível de acesso do usuário atende ao nível necessário
+        if (isset($_SESSION['nivel_acesso']) && $_SESSION['nivel_acesso'] >= $nivelNecessario) {
+            return true; // Usuário tem permissão
+        }
+
+        return false; // Usuário não tem permissão
+    }
+
     public function getId()
     {
         return $this->id;
