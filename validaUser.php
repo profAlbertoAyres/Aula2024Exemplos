@@ -19,9 +19,3 @@ if (!isset($_SESSION['user_name']) || !isset($_SESSION['nivel_acesso'])) {
     exit;
 }
 
-if (!$usuario->verificarNivelAcesso($niveisPermitidos)) {
-    // Redireciona para a página de login ou exibe mensagem de erro
-    echo "<script>alert('Você não tem permissão para acessar esta página!');</script>";
-    header("Location: login.php");
-    exit();
-}

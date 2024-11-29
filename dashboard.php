@@ -1,11 +1,6 @@
 <?php
-<<<<<<< HEAD
-require_once "validaUser.php";
-=======
-    require_once "validaUser.php";
->>>>>>> ad0244d42b89b887766202dfdacd0e354d25418c
+    require_once "validaUser.php"
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,12 +11,9 @@ require_once "validaUser.php";
 </head>
 <body>
 <?php
-<<<<<<< HEAD
 spl_autoload_register(function ($class) {
     require_once "classes/{$class}.class.php";
 });
-=======
->>>>>>> ad0244d42b89b887766202dfdacd0e354d25418c
 
 $userName = $_SESSION['user_name'];
 $userLevel = $_SESSION['nivel_acesso'];

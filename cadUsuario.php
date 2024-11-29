@@ -1,5 +1,5 @@
 <?php
-    require_once 'validaUser.php'
+#    require_once 'validaUser.php'
 ?>  
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -74,7 +74,7 @@ class Usuario extends CRUD
 
         if ($stmt->rowCount() > 0) {
             $usuario = $stmt->fetch(PDO::FETCH_OBJ);
-            if (password_verify($this->senha, $usuario->senhaUsuario)) {
+            if (password_verify($this->senha, $usuario->senhausuario)) {
                 $_SESSION['user_name'] = $usuario->nomeUsuario;
                 $_SESSION['nivel_acesso'] = $usuario->nivel_acessoUsuario; // Armazena o nível de acesso
                 $_SESSION['ultimaAtividade'] = time(); // Armazena a hora da última atividade
