@@ -1,7 +1,19 @@
 <?php
-    require_once "validaUser.php";
-?>
+<<<<<<< HEAD
+    require_once "validaUser.php"
+=======
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+if (!isset($_SESSION['user_name'])) {
+    // Salva a URL atual
+    $current_page = urlencode($_SERVER['REQUEST_URI']);
+    header("Location: login.php?redirect=$current_page");
+    exit();
+}
+>>>>>>> parent of 1e10d06 (Foda)
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -12,7 +24,21 @@
 </head>
 <body>
 <?php
+spl_autoload_register(function ($class) {
+    require_once("classes/{$class}.class.php");
+});
 
+$usuario = new Usuario;
+
+if ($usuario->sessaoExpirou()) {
+    header("Location: login.php?session_expired=true");
+    exit;
+}
+
+if (!isset($_SESSION['user_name']) || !isset($_SESSION['nivel_acesso'])) {
+    header("Location: login.php?error=not_logged_in");
+    exit;
+}
 $userName = $_SESSION['user_name'];
 $userLevel = $_SESSION['nivel_acesso'];
 

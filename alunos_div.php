@@ -1,6 +1,20 @@
 <?php
+<<<<<<< HEAD:alunos_div.php
 require_once 'validaUser.php'
     ?>
+=======
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_name'])) {
+    // Salva a URL atual
+    $current_page = urlencode($_SERVER['REQUEST_URI']);
+    header("Location: login.php?redirect=$current_page");
+    exit();
+}
+?>
+>>>>>>> parent of 1e10d06 (Foda):alunosDiv.php
 
 <!DOCTYPE html>
 <html lang="pt-br">

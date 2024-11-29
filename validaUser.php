@@ -14,9 +14,8 @@ if ($usuario->sessaoExpirou()) {
     exit;
 }
 
-if (!isset($_SESSION['user_name'])) {
-    // Salva a URL atual
-    $current_page = urlencode($_SERVER['REQUEST_URI']);
-    header("Location: login.php?redirect=$current_page");
-    exit();
+if (!isset($_SESSION['user_name']) || !isset($_SESSION['nivel_acesso'])) {
+    header("Location: login.php?error=not_logged_in");
+    exit;
 }
+
