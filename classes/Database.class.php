@@ -2,14 +2,14 @@
 
 final class Database
 {
-    private static $driver = 'pgsql';  # Escolher qual o banco vai utilizar, coloquei para MYSQL ou PostgreSQL
+    private static $driver = 'mysql';  # Escolher qual o banco vai utilizar, coloquei para MYSQL ou PostgreSQL
     private static $host = "localhost"; #Endereço da banco de dados
-    private static $dbName = "aulas_3b"; # Nome do banco de dados
-    private static $username = "postgres"; # Usuário do banco de dados 
-    private static $password = "12"; # Senha do banco de dados 
+    private static $dbName = "aulapw"; # Nome do banco de dados
+    private static $username = "root"; # Usuário do banco de dados 
+    private static $password = ""; # Senha do banco de dados 
     private static $charset = 'utf8mb4';  # Charset usado que vai utilizar, pelos acentos
 
-    public static $port = 5432; #Define a porta do banco de dados 
+    public static $port = 3306; #Define a porta do banco de dados 
     private static $pdo = null; # Vamos utilizar para conectar
     private static $error; # guardar os erros
 

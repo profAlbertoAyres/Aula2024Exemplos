@@ -1,5 +1,17 @@
 <?php
 
+// script do banco de dados
+// CREATE TABLE aluno (
+//     id int NOT NULL AUTO_INCREMENT,
+//     nomeAluno varchar(255) NOT NULL,
+//     emailAluno varchar(255) NOT NULL,
+//     celularAluno varchar(14) NOT NULL,
+//     estadoCivilAluno varchar(5) NOT NULL,
+//     statusAluno varchar(1) NOT NULL,
+//     Foto varchar(255) DEFAULT NULL,
+//     PRIMARY KEY (id)
+//   );
+  
 class Aluno extends CRUD{
     protected $table = "Aluno";
     private $id;
@@ -137,7 +149,7 @@ class Aluno extends CRUD{
 
     function add(){
         // SQL de inserção
-        $sql = "INSERT INTO Aluno (nome, email, celular, estadoCivil, status, foto) 
+        $sql = "INSERT INTO Aluno (nomeAluno, emailAluno, celularAluno, estadoCivilAluno, statusAluno, Foto) 
                 VALUES (:nome, :email, :celular, :estadoCivil, :status, :foto)";
 
         // Preparar a declaração usando a classe Database
@@ -156,7 +168,7 @@ class Aluno extends CRUD{
 
     }
     function update($campo, $id){
-        $sql = "UPDATE $this->table SET nome=:nome, email=:email, celular=:celular, estadocivil=:estadocivil, status=:status, foto=:foto WHERE $campo=:id";
+        $sql = "UPDATE $this->table SET nomeAluno=:nome, emailAluno=:email, celularAluno=:celular, estadocivilAluno=:estadocivilAluno, statusAluno=:status, Foto=:foto WHERE $campo=:id";
         $stmt = Database::prepare($sql);
         // Atribuir os valores aos parâmetros
         $stmt->bindParam(':nome', $this->nome);

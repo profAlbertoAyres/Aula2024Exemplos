@@ -1,5 +1,15 @@
 <?php
+// script do banco de dados
+// CREATE TABLE usuario (
+//     id int NOT NULL AUTO_INCREMENT,
+//     nomeUsuario varchar(100) NOT NULL,
+//     emailUsuario varchar(100) NOT NULL,
+//     senhaUsuario varchar(200) NOT NULL,
+//     nivel_acessoUsuario int NOT NULL,
+//     PRIMARY KEY (id)
+//   ) ;
 
+  
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -17,7 +27,7 @@ class Usuario extends CRUD
     //Adiciona um usuário
     public function add()
     {
-        $query = "INSERT INTO $this->table (nome, email, senha, nivel_acesso) 
+        $query = "INSERT INTO $this->table (nomeUsuario, emailUsuario, senhaUsuario, nivel_acessoUsuario) 
                   VALUES (:nome, :email, :senha, :nivel_acesso)";
         $stmt = Database::prepare($query);
 
@@ -37,7 +47,7 @@ class Usuario extends CRUD
     public function update($campo, $id)
     {
         $query = "UPDATE $this->table 
-                  SET nome = :nome, email = :email, senha = :senha, nivel_acesso = :nivel_acesso 
+                  SET nomeUsuario = :nome, emailUsuario = :email, senhaUsuario = :senha, nivel_acessoUsuario = :nivel_acesso 
                   WHERE $campo = :id";
         $stmt = Database::prepare($query);
 
@@ -57,16 +67,16 @@ class Usuario extends CRUD
     #Efetuar Login
     public function login()
     {
-        $query = "SELECT * FROM " . $this->table . " WHERE nome = :nome";
+        $query = "SELECT * FROM  $this->table WHERE nomeUsuario = :nome";
         $stmt = Database::prepare($query);
         $stmt->bindParam(':nome', $this->nome);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
             $usuario = $stmt->fetch(PDO::FETCH_OBJ);
-            if (password_verify($this->senha, $usuario->senha)) {
-                $_SESSION['user_name'] = $usuario->nome;
-                $_SESSION['nivel_acesso'] = $usuario->nivel_acesso; // Armazena o nível de acesso
+            if (password_verify($this->senha, $usuario->senhaUsuario)) {
+                $_SESSION['user_name'] = $usuario->nomeUsuario;
+                $_SESSION['nivel_acesso'] = $usuario->nivel_acessoUsuario; // Armazena o nível de acesso
                 $_SESSION['ultimaAtividade'] = time(); // Armazena a hora da última atividade
                 $redirect_url = $_POST['redirect'] ?? 'dashboard.php';
                 header("Location: $redirect_url");

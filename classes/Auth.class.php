@@ -8,7 +8,7 @@ class Auth
 
     public function validarEmail($email)
     {
-        $query = "SELECT id FROM Usuario WHERE email = :email";
+        $query = "SELECT id FROM Usuario WHERE emailUsuario = :email";
         $stmt = Database::prepare($query);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
@@ -30,8 +30,7 @@ class Auth
         // Gera um token seguro
         $this->token = bin2hex(random_bytes(32));
         $this->expiracao = date("Y-m-d H:i:s", strtotime("+1 hour"));
-        $query = "INSERT INTO redefinicoes_senha (email, token, expiracao) 
-                  VALUES (:email, :token, :expiracao)";
+        $query = "INSERT INTO redefinicoes_senha (email, token, expiracao) VALUES (:email, :token, :expiracao)";
         $stmt = Database::prepare($query);
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':token', $this->token);
