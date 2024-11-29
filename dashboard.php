@@ -1,14 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-if (!isset($_SESSION['user_name'])) {
-    // Salva a URL atual
-    $current_page = urlencode($_SERVER['REQUEST_URI']);
-    header("Location: login.php?redirect=$current_page");
-    exit();
-}
+    require_once "validaUser.php";
 ?>
 
 <!DOCTYPE html>
@@ -16,25 +7,12 @@ if (!isset($_SESSION['user_name'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Dashboard</title>
 </head>
 <body>
 <?php
-spl_autoload_register(function ($class) {
-    require_once("classes/{$class}.class.php");
-});
 
-$usuario = new Usuario;
-
-if ($usuario->sessaoExpirou()) {
-    header("Location: login.php?session_expired=true");
-    exit;
-}
-
-if (!isset($_SESSION['user_name']) || !isset($_SESSION['nivel_acesso'])) {
-    header("Location: login.php?error=not_logged_in");
-    exit;
-}
 $userName = $_SESSION['user_name'];
 $userLevel = $_SESSION['nivel_acesso'];
 
@@ -56,6 +34,57 @@ switch ($userLevel) {
 }
 
    ?> 
+
+<header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="imagens/logo.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                    IFRO - Cacoal
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Alunos</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <?php if (isset($_SESSION['user_name'])): ?>
+                            <!-- Usuário Logado -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="alterar_perfil.php">Alterar Perfil</a></li>
+                                    <li><a class="dropdown-item" href="alterar_senha.php">Alterar Senha</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item text-danger" href="logout.php">Sair</a></li>
+                                </ul>
+                            </li>
+                        <?php else: ?>
+                            <!-- Usuário Não Logado -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="login.php"><i class="bi bi-person-circle"></i> Entrar</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </header>
 <body>
     <div class="container mt-5">
         <h1>Bem-vindo, <?php echo htmlspecialchars($userName); ?>!</h1>
